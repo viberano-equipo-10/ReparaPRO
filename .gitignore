@@ -15,3 +15,6 @@ data/
 
 # PDFs de prueba para scripts/send_invoices_from_folder.py — nunca en control de versiones
 facturas/
+
+# Configuración local de permisos de Claude Code — no compartida entre máquinas/sesiones
+.claude/settings.local.json
