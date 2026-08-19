@@ -15,7 +15,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 from fastapi import FastAPI, HTTPException, Request  # noqa: E402
-from fastapi.responses import JSONResponse  # noqa: E402
+from fastapi.responses import JSONResponse, RedirectResponse  # noqa: E402
 from fastapi.templating import Jinja2Templates  # noqa: E402
 
 from app.api.routes import api_router  # noqa: E402
@@ -38,6 +38,13 @@ app = FastAPI(title="Invoice Manager")
 def on_startup() -> None:
     init_db()
     logger.info("Base de datos inicializada")
+
+
+@app.get("/")
+def root() -> RedirectResponse:
+    # /facturas ya redirige a /login si no hay sesión (app/web.py), así que cualquier acceso a
+    # la URL base acaba en el flujo correcto sin duplicar esa comprobación aquí.
+    return RedirectResponse(url="/facturas")
 
 
 @app.exception_handler(HTTPException)
